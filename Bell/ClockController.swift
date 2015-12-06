@@ -89,7 +89,7 @@ class ClockController: UIViewController {
                 NSLog("%@", error!)
             }
         }
-        let defaults = NSUserDefaults.standardUserDefaults()    
+        let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(false, forKey: "isAlarmActive")
     }
     
@@ -118,6 +118,7 @@ class ClockController: UIViewController {
                 print(object!["active"] as! String)
                 if object!["active"] as! String == "false" {
                     self.audioPlayer.stop()
+                    self.parseLoop.invalidate()
                 }
                 else {
                     self.audioPlayer.play()

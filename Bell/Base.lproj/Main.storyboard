@@ -47,6 +47,13 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LbU-06-XGq">
+                                <rect key="frame" x="283" y="180" width="34" height="30"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="startButtonPressed:" destination="c1v-NA-fWh" eventType="touchUpInside" id="Jru-dQ-dAt"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n3x-k5-9Cn">
                                 <rect key="frame" x="277" y="218" width="46" height="30"/>
                                 <constraints>
@@ -54,14 +61,7 @@
                                 </constraints>
                                 <state key="normal" title="Stop"/>
                                 <connections>
-                                    <action selector="parseButtonPressed:" destination="c1v-NA-fWh" eventType="touchUpInside" id="Hhq-D6-Zly"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LbU-06-XGq">
-                                <rect key="frame" x="283" y="180" width="34" height="30"/>
-                                <state key="normal" title="Start"/>
-                                <connections>
-                                    <action selector="startButtonPressed:" destination="c1v-NA-fWh" eventType="touchUpInside" id="Jru-dQ-dAt"/>
+                                    <action selector="stopButtonPressed:" destination="c1v-NA-fWh" eventType="touchUpInside" id="70X-vT-sa3"/>
                                 </connections>
                             </button>
                         </subviews>
