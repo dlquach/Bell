@@ -29,19 +29,30 @@ class ClockController: UIViewController {
         // Display the current time.
         timeLabel.text = getCurrentTime()
         
-        // Set up the tick timer.
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "tick", userInfo: nil, repeats: true)
-        
-        let alertSound = NSBundle.mainBundle().URLForResource("alarm", withExtension: "mp3")
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOfURL: alertSound!)
-            audioPlayer.numberOfLoops = -1
-            audioPlayer.prepareToPlay()
-        } catch {
-            print("Alarm sound broke")
+        // Check to see if user has registered.
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if (defaults.objectForKey("userName") == nil) {
+            let altMessage = UIAlertController(title: "Welcome to Bell!", message: "Please enter your name.", preferredStyle: UIAlertControllerStyle.Alert)
+            altMessage.addTextFieldWithConfigurationHandler {
+                (textField) -> Void in
+                textField.placeholder = "Your name..."
+            }
+            altMessage.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler: {
+                    (alert: UIAlertAction!) -> Void in
+                    // "Register" the user.
+                    let user = PFObject(className: "User")
+                    let userName = ((altMessage.textFields?[0])! as UITextField).text
+                    user.setObject(userName!, forKey: "name")
+                    user.saveInBackground()
+                
+                    defaults.setObject(userName!, forKey: "userName")
+                    self.setupTick()
+                }))
+            self.presentViewController(altMessage, animated: true, completion: nil)
         }
-        
-        
+        else {
+            setupTick()
+        }
         
     }
     
@@ -77,6 +88,19 @@ class ClockController: UIViewController {
             } else {
                 NSLog("%@", error!)
             }
+        }
+    }
+    
+    func setupTick() {
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "tick", userInfo: nil, repeats: true)
+        
+        let alertSound = NSBundle.mainBundle().URLForResource("alarm", withExtension: "mp3")
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOfURL: alertSound!)
+            audioPlayer.numberOfLoops = -1
+            audioPlayer.prepareToPlay()
+        } catch {
+                print("Alarm sound broke")
         }
     }
     
@@ -133,7 +157,7 @@ class ClockController: UIViewController {
             }
             else {
                 print("Alarm is at", stringTime, "but it is", theTime)
-                parseLoop.invalidate()  
+                parseLoop.invalidate()
             }
         }
         else {
