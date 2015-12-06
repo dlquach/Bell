@@ -30,6 +30,7 @@
 		ED65E2EA1C107552008179B5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65E2E91C107552008179B5 /* libz.tbd */; };
 		ED65E2EC1C107558008179B5 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65E2EB1C107558008179B5 /* libsqlite3.tbd */; };
 		ED65E3301C107AF5008179B5 /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ED65E32F1C107AF5008179B5 /* alarm.mp3 */; };
+		EDCF814C1C140AF00052CF77 /* SetAlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCF814B1C140AF00052CF77 /* SetAlarmController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		ED65E2E91C107552008179B5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		ED65E2EB1C107558008179B5 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		ED65E32F1C107AF5008179B5 /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
+		EDCF814B1C140AF00052CF77 /* SetAlarmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetAlarmController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 			children = (
 				ED65E2B51C10749F008179B5 /* AppDelegate.swift */,
 				ED65E2BA1C10749F008179B5 /* ClockController.swift */,
+				EDCF814B1C140AF00052CF77 /* SetAlarmController.swift */,
 				ED65E2BE1C10749F008179B5 /* Main.storyboard */,
 				ED65E2C11C10749F008179B5 /* Assets.xcassets */,
 				ED65E2C31C10749F008179B5 /* LaunchScreen.storyboard */,
@@ -216,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDCF814C1C140AF00052CF77 /* SetAlarmController.swift in Sources */,
 				ED65E2B91C10749F008179B5 /* Bell.xcdatamodeld in Sources */,
 				ED65E2B61C10749F008179B5 /* AppDelegate.swift in Sources */,
 				ED65E2BB1C10749F008179B5 /* ClockController.swift in Sources */,
@@ -374,6 +378,7 @@
 				ED65E2CB1C10749F008179B5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -19,15 +19,18 @@ class ClockController: UIViewController {
     var audioPlayer = AVAudioPlayer()
     var testObject = PFObject(className: "AlarmObject")
     var parseLoop = NSTimer()
+    var timer = NSTimer()
+    var alarmTime:String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let date = NSDate()
-        let formatter = NSDateFormatter()
-        formatter.timeStyle = .ShortStyle
-        timeLabel.text = (formatter.stringFromDate(date))
+        // Display the current time.
+        timeLabel.text = getCurrentTime()
+        
+        // Set up the tick timer.
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "tick", userInfo: nil, repeats: true)
         
         let alertSound = NSBundle.mainBundle().URLForResource("alarm", withExtension: "mp3")
         do {
@@ -37,16 +40,14 @@ class ClockController: UIViewController {
         } catch {
             print("Alarm sound broke")
         }
-        waitForStopMessage()
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func playAlert() {
-        
     }
     
     @IBAction func startButtonPressed(sender: AnyObject) {
@@ -85,7 +86,7 @@ class ClockController: UIViewController {
     
     func getParseObjects() {
         let query = PFQuery(className: "AlarmObject")
-        query.getObjectInBackgroundWithId("AjOpz8E0Nx") {
+        query.getObjectInBackgroundWithId("AjOpz8E0Nx")	 {
             (object: PFObject?, error: NSError?) -> Void in
             if (error == nil) {
                 print(object!["active"] as! String)
@@ -99,6 +100,40 @@ class ClockController: UIViewController {
                 NSLog("%@", error!)
             }
         }
+    }
+    
+    func getCurrentTime() -> String {
+        let date = NSDate()
+        let formatter = NSDateFormatter()
+        formatter.timeStyle = .ShortStyle
+        return formatter.stringFromDate(date)
+    }
+    
+    func tick() {
+        let theTime = getCurrentTime()
+        
+        // Display the current time.
+        if timeLabel.text != theTime {
+            timeLabel.text = theTime
+        }
+        
+        // Check if am alarm should be triggered.
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let alarmTime = defaults.stringForKey("alarmTime") {
+            print("Alarm at", alarmTime)
+            if alarmTime == theTime {
+                if !parseLoop.valid {
+                    waitForStopMessage()
+                }
+            }
+            else {
+                print("Alarm is at", alarmTime, "but it is", theTime)
+            }
+        }
+        else {
+            print("No alarm set")
+        }
+        
     }
 }
 
