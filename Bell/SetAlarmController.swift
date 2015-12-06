@@ -49,6 +49,8 @@ class SetAlarmController: UIViewController {
             }
         }
         
+        defaults.setObject(true, forKey: "isAlarmActive")
+        
         self.navigationController?.popViewControllerAnimated(true)
     }
     

@@ -33,25 +33,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         
         // When minimizing the app, queue up all the notifications 
-        // in the world to act as an alarm
+        // in the world to act as an alarm if active.
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let alarmTime = defaults.objectForKey("alarmTime") {
-            let LENGTH_OF_ALARM = 5.0
-            
-            for index in 1...100 {
-                let notification = UILocalNotification()
-                notification.alertBody = "Wake up!!"
-                notification.alertAction = "open"
-                notification.fireDate = (alarmTime as! NSDate).dateByAddingTimeInterval(Double(index) * LENGTH_OF_ALARM)
-                notification.soundName = "alarm.mp3"
-                notification.userInfo = ["UUID": "Test", ] // UUID
-                notification.category = "TODO_CATEGORY"
+        if (defaults.boolForKey("isAlarmActive") == true) {
+            if let alarmTime = defaults.objectForKey("alarmTime") {
+                let LENGTH_OF_ALARM = 5.0
                 
-                UIApplication.sharedApplication().scheduleLocalNotification(notification)
-                
+                for index in 1...100 {
+                    let notification = UILocalNotification()
+                    notification.alertBody = "Wake up!!"
+                    notification.alertAction = "open"
+                    notification.fireDate = (alarmTime as! NSDate).dateByAddingTimeInterval(Double(index) * LENGTH_OF_ALARM)
+                    notification.soundName = "alarm.mp3"
+                    notification.userInfo = ["UUID": "Test", ] // UUID
+                    notification.category = "TODO_CATEGORY"
+                    
+                    UIApplication.sharedApplication().scheduleLocalNotification(notification)
+                }
             }
         }
-        
     
     }
 

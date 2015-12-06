@@ -76,7 +76,7 @@ class ClockController: UIViewController {
         }
     }
     
-    @IBAction func parseButtonPressed(sender: AnyObject) {
+    @IBAction func stopButtonPressed(sender: AnyObject) {
         let query = PFQuery(className: "AlarmObject")
         query.getObjectInBackgroundWithId("AjOpz8E0Nx") {
             (object: PFObject?, error: NSError?) -> Void in
@@ -89,6 +89,8 @@ class ClockController: UIViewController {
                 NSLog("%@", error!)
             }
         }
+        let defaults = NSUserDefaults.standardUserDefaults()    
+        defaults.setObject(false, forKey: "isAlarmActive")
     }
     
     func setupTick() {
