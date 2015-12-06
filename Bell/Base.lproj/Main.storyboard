@@ -33,6 +33,10 @@
                     <view key="view" contentMode="scaleToFill" id="qHt-1w-OyE">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <userGuides>
+                            <userLayoutGuide location="268" affinity="minY"/>
+                            <userLayoutGuide location="268" affinity="minY"/>
+                        </userGuides>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WSa-Be-NtJ">
                                 <rect key="frame" x="281" y="144" width="38" height="21"/>

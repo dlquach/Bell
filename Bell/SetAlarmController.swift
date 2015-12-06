@@ -15,7 +15,7 @@ class SetAlarmController: UIViewController {
     
     @IBOutlet weak var setAlarmButton: UIButton!
     @IBOutlet weak var datePicker: UIDatePicker!
-    
+    let LENGTH_OF_ALARM = 5.0
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -33,7 +33,7 @@ class SetAlarmController: UIViewController {
         print("Selected", formatter.stringFromDate(datePicker.date))
         
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(formatter.stringFromDate(datePicker.date), forKey: "alarmTime")
+        defaults.setObject(datePicker.date, forKey: "alarmTime")
         
         // Turn on the parse object
         let query = PFQuery(className: "AlarmObject")
@@ -48,7 +48,6 @@ class SetAlarmController: UIViewController {
                 NSLog("%@", error!)
             }
         }
-
         
         self.navigationController?.popViewControllerAnimated(true)
     }

@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil))
+        
         setupParse()
         
         return true
@@ -28,6 +31,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        
+        // When minimizing the app, queue up all the notifications 
+        // in the world to act as an alarm
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let alarmTime = defaults.objectForKey("alarmTime") {
+            let LENGTH_OF_ALARM = 5.0
+            
+            for index in 1...100 {
+                let notification = UILocalNotification()
+                notification.alertBody = "Wake up!!"
+                notification.alertAction = "open"
+                notification.fireDate = (alarmTime as! NSDate).dateByAddingTimeInterval(Double(index) * LENGTH_OF_ALARM)
+                notification.soundName = "alarm.mp3"
+                notification.userInfo = ["UUID": "Test", ] // UUID
+                notification.category = "TODO_CATEGORY"
+                
+                UIApplication.sharedApplication().scheduleLocalNotification(notification)
+                
+            }
+        }
+        
+    
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
@@ -37,10 +62,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        // Clear all the notifications since the app can take
+        // care of the alarm.
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
     }
 
     func applicationWillTerminate(application: UIApplication) {

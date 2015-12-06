@@ -179,6 +179,11 @@
 					ED65E2B11C10749F008179B5 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = R4JJ973GPF;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};

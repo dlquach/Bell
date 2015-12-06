@@ -102,11 +102,15 @@ class ClockController: UIViewController {
         }
     }
     
-    func getCurrentTime() -> String {
-        let date = NSDate()
+    func convertDateToHM(date: NSDate) -> String {
         let formatter = NSDateFormatter()
         formatter.timeStyle = .ShortStyle
         return formatter.stringFromDate(date)
+    }
+    
+    func getCurrentTime() -> String {
+        let date = NSDate()
+        return convertDateToHM(date)
     }
     
     func tick() {
@@ -119,15 +123,17 @@ class ClockController: UIViewController {
         
         // Check if am alarm should be triggered.
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let alarmTime = defaults.stringForKey("alarmTime") {
-            print("Alarm at", alarmTime)
-            if alarmTime == theTime {
+        if let alarmTime = defaults.objectForKey("alarmTime") {
+            let stringTime = convertDateToHM(alarmTime as! NSDate)
+            print(stringTime)
+            if stringTime == theTime {
                 if !parseLoop.valid {
                     waitForStopMessage()
                 }
             }
             else {
-                print("Alarm is at", alarmTime, "but it is", theTime)
+                print("Alarm is at", stringTime, "but it is", theTime)
+                parseLoop.invalidate()  
             }
         }
         else {
