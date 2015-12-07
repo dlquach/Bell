@@ -110,7 +110,7 @@ class ClockController: UIViewController {
     }
     
     func waitForStopMessage() {
-        parseLoop = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "getParseObjects", userInfo: nil, repeats: true)
+        parseLoop = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "handleAlarmObjectState", userInfo: nil, repeats: true)
     }
     
     func handleAlarmObjectState() {
@@ -184,12 +184,11 @@ class ClockController: UIViewController {
                 let stringTime = ClockController.convertDateToHM(alarmTime as! NSDate)
                 if stringTime == theTime {
                     if !parseLoop.valid {
-                        handleAlarmObjectState()
+                        waitForStopMessage() 
                     }
                 }
                 else {
                     print("Alarm is at", stringTime, "but it is", theTime)
-                    parseLoop.invalidate()
                 }
             }
             

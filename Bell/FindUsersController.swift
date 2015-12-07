@@ -96,6 +96,24 @@ class FindUsersController: UIViewController, UITableViewDataSource {
                     NSLog("%@", error!)
                 }
             }
+            
+            defaults.setObject(true, forKey: "isAlarmActive")
+            
+            print("2", partnerId)
+            let partnerQuery = PFQuery(className: "AlarmObject")
+            partnerQuery.getObjectInBackgroundWithId(partnerId) {
+                (object: PFObject?, error: NSError?) -> Void in
+                if (error == nil) {	
+                    object!["active"] = true
+                    object!["paired"] = true
+                    object!["partnerId"] = defaults.stringForKey("myId")
+                    object!.saveEventually()
+                    print("Updated partners")
+                } else {
+                    NSLog("%@", error!)
+                }
+            }
+            
                 
         }
         else {
@@ -109,29 +127,31 @@ class FindUsersController: UIViewController, UITableViewDataSource {
             alarm.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
                 print("Object has been saved.")
                 defaults.setObject(alarm.objectId! as String, forKey: "myId")
+                
+                defaults.setObject(true, forKey: "isAlarmActive")
+                
+                print("2", partnerId)
+                let partnerQuery = PFQuery(className: "AlarmObject")
+                partnerQuery.getObjectInBackgroundWithId(partnerId) {
+                    (object: PFObject?, error: NSError?) -> Void in
+                    if (error == nil) {
+                        object!["active"] = true
+                        object!["paired"] = true
+                        object!["partnerId"] = defaults.stringForKey("myId")
+                        object!.saveEventually()
+                        print("Updated partners")
+                    } else {
+                        NSLog("%@", error!)
+                    }
+                }
+                
             }
             
             
         }
         
         
-        defaults.setObject(true, forKey: "isAlarmActive")
         
-        print("2", partnerId)
-        let partnerQuery = PFQuery(className: "AlarmObject")
-        partnerQuery.getObjectInBackgroundWithId(partnerId) {
-            (object: PFObject?, error: NSError?) -> Void in
-                if (error == nil) {
-                    object!["active"] = true
-                    object!["paired"] = true
-                    object!["partnerId"] = defaults.stringForKey("myId")
-                    object!.saveEventually()
-                    print("Updated partners")
-                } else {
-                    NSLog("%@", error!)
-                }
-        }
-    
 
     }
     
