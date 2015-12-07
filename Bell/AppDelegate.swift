@@ -32,32 +32,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         
-        // When minimizing the app, queue up all the notifications 
-        // in the world to act as an alarm if active.
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.boolForKey("isAlarmActive") == true) {
-            if let alarmTime = defaults.objectForKey("alarmTime") {
-                let LENGTH_OF_ALARM = 5.0
-                
-                for index in 1...100 {
-                    let notification = UILocalNotification()
-                    notification.alertBody = "Wake up!!"
-                    notification.alertAction = "open"
-                    notification.fireDate = (alarmTime as! NSDate).dateByAddingTimeInterval(Double(index) * LENGTH_OF_ALARM)
-                    notification.soundName = "alarm.mp3"
-                    notification.userInfo = ["UUID": "Test", ] // UUID
-                    notification.category = "TODO_CATEGORY"
-                    
-                    UIApplication.sharedApplication().scheduleLocalNotification(notification)
-                }
-            }
-        }
+        
     
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        // When minimizing the app, queue up all the notifications
+        // in the world to act as an alarm if active.
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if (defaults.boolForKey("isAlarmActive") == true) {
+            if let alarmTime = defaults.objectForKey("alarmTime") {
+                ClockController.queueUpLocalNotifications(alarmTime as! NSDate)
+            }
+        }
+        else {
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+        }
     }
 
     func applicationWillEnterForeground(application: UIApplication) {

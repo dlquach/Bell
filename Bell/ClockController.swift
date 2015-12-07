@@ -61,8 +61,9 @@ class ClockController: UIViewController {
     }
     
     @IBAction func startButtonPressed(sender: AnyObject) {
+        let defaults = NSUserDefaults.standardUserDefaults()
         let query = PFQuery(className: "AlarmObject")
-        query.getObjectInBackgroundWithId("AjOpz8E0Nx") {
+        query.getObjectInBackgroundWithId(defaults.stringForKey("myId")!) {
             (object: PFObject?, error: NSError?) -> Void in
             if (error == nil) {
                 object!["active"] = "true"
@@ -76,11 +77,16 @@ class ClockController: UIViewController {
     }
     
     @IBAction func stopButtonPressed(sender: AnyObject) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        // Disable your partner's alarm if you have one
+        let partnerId = defaults.stringForKey("partnerId")
+        print(partnerId)
         let query = PFQuery(className: "AlarmObject")
-        query.getObjectInBackgroundWithId("AjOpz8E0Nx") {
+        query.getObjectInBackgroundWithId(partnerId!) {
             (object: PFObject?, error: NSError?) -> Void in
             if (error == nil) {
-                object!["active"] = "false"
+                object!["active"] = false
                 object!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
                     print("Object has been saved.")
                 }
@@ -88,8 +94,6 @@ class ClockController: UIViewController {
                 NSLog("%@", error!)
             }
         }
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(false, forKey: "isAlarmActive")
     }
     
     func setupTick() {
@@ -109,18 +113,26 @@ class ClockController: UIViewController {
         parseLoop = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "getParseObjects", userInfo: nil, repeats: true)
     }
     
-    func getParseObjects() {
+    func handleAlarmObjectState() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let myId = defaults.stringForKey("myId")
         let query = PFQuery(className: "AlarmObject")
-        query.getObjectInBackgroundWithId("AjOpz8E0Nx")	 {
+        query.getObjectInBackgroundWithId(myId!)	 {
             (object: PFObject?, error: NSError?) -> Void in
             if (error == nil) {
-                print(object!["active"] as! String)
-                if object!["active"] as! String == "false" {
+                if (object!["active"] as! Bool) == false {
                     self.audioPlayer.stop()
                     self.parseLoop.invalidate()
+                    defaults.setObject(false, forKey: "isAlarmActive")
+                    UIApplication.sharedApplication().cancelAllLocalNotifications()
                 }
                 else {
                     self.audioPlayer.play()
+                }
+                
+                // Update your partnerId
+                if object!["paired"] as! Bool {
+                    defaults.setObject(object!["partnerId"] as! String, forKey: "partnerId")
                 }
             } else {
                 NSLog("%@", error!)
@@ -132,6 +144,22 @@ class ClockController: UIViewController {
         let formatter = NSDateFormatter()
         formatter.timeStyle = .ShortStyle
         return formatter.stringFromDate(date)
+    }
+
+    class func queueUpLocalNotifications(alarmTime: NSDate) {
+        let LENGTH_OF_ALARM = 5.0
+        
+        for index in 1...100 {
+            let notification = UILocalNotification()
+            notification.alertBody = "Wake up!!"
+            notification.alertAction = "open"
+            notification.fireDate = (alarmTime).dateByAddingTimeInterval(Double(index) * LENGTH_OF_ALARM)
+            notification.soundName = "alarm.mp3"
+            notification.userInfo = ["UUID": "Test", ] // UUID
+            notification.category = "TODO_CATEGORY"
+            
+            UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        }
     }
     
     func getCurrentTime() -> String {
@@ -146,25 +174,32 @@ class ClockController: UIViewController {
         if timeLabel.text != theTime {
             timeLabel.text = theTime
         }
-        
-        // Check if am alarm should be triggered.
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let alarmTime = defaults.objectForKey("alarmTime") {
-            let stringTime = ClockController.convertDateToHM(alarmTime as! NSDate)
-            print(stringTime)
-            if stringTime == theTime {
-                if !parseLoop.valid {
-                    waitForStopMessage()
+
+        // Always check to see if alarms need to be stopped
+        if defaults.boolForKey("isAlarmActive") {
+            // Check if am alarm should be triggered.
+            let defaults = NSUserDefaults.standardUserDefaults()
+            if let alarmTime = defaults.objectForKey("alarmTime") {
+                let stringTime = ClockController.convertDateToHM(alarmTime as! NSDate)
+                if stringTime == theTime {
+                    if !parseLoop.valid {
+                        handleAlarmObjectState()
+                    }
+                }
+                else {
+                    print("Alarm is at", stringTime, "but it is", theTime)
+                    parseLoop.invalidate()
                 }
             }
-            else {
-                print("Alarm is at", stringTime, "but it is", theTime)
-                parseLoop.invalidate()
-            }
+            
         }
         else {
-            print("No alarm set")
+            self.audioPlayer.stop()
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
         }
+        
+        
         
     }
 }

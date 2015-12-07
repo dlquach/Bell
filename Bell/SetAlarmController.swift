@@ -43,13 +43,15 @@ class SetAlarmController: UIViewController {
         alarm.setObject(datePicker.date, forKey: "dateTime")
         alarm.setObject(true, forKey: "active")
         alarm.setObject(false, forKey: "paired")
+        alarm.setObject("", forKey: "partnerId")
 
         alarm.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
             print("Object has been saved.")
+            defaults.setObject(alarm.objectId! as String, forKey: "myId")
+            defaults.setObject(true, forKey: "isAlarmActive")
+            ClockController.queueUpLocalNotifications(self.datePicker.date)
         }
         
-        defaults.setObject(alarm.objectId! as String, forKey: "alarmObjectId")
-        defaults.setObject(true, forKey: "isAlarmActive")
         
         self.navigationController?.popViewControllerAnimated(true)
     }
