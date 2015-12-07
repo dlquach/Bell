@@ -17,7 +17,6 @@ class ClockController: UIViewController {
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
     var audioPlayer = AVAudioPlayer()
-    var testObject = PFObject(className: "AlarmObject")
     var parseLoop = NSTimer()
     var timer = NSTimer()
     var alarmTime:String? = nil
@@ -129,7 +128,7 @@ class ClockController: UIViewController {
         }
     }
     
-    func convertDateToHM(date: NSDate) -> String {
+    class func convertDateToHM(date: NSDate) -> String {
         let formatter = NSDateFormatter()
         formatter.timeStyle = .ShortStyle
         return formatter.stringFromDate(date)
@@ -137,7 +136,7 @@ class ClockController: UIViewController {
     
     func getCurrentTime() -> String {
         let date = NSDate()
-        return convertDateToHM(date)
+        return ClockController.convertDateToHM(date)
     }
     
     func tick() {
@@ -151,7 +150,7 @@ class ClockController: UIViewController {
         // Check if am alarm should be triggered.
         let defaults = NSUserDefaults.standardUserDefaults()
         if let alarmTime = defaults.objectForKey("alarmTime") {
-            let stringTime = convertDateToHM(alarmTime as! NSDate)
+            let stringTime = ClockController.convertDateToHM(alarmTime as! NSDate)
             print(stringTime)
             if stringTime == theTime {
                 if !parseLoop.valid {

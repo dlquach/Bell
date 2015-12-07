@@ -35,20 +35,20 @@ class SetAlarmController: UIViewController {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(datePicker.date, forKey: "alarmTime")
         
-        // Turn on the parse object
-        let query = PFQuery(className: "AlarmObject")
-        query.getObjectInBackgroundWithId("AjOpz8E0Nx") {
-            (object: PFObject?, error: NSError?) -> Void in
-            if (error == nil) {
-                object!["active"] = "true"
-                object!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-                    print("Object has been saved.")
-                }
-            } else {
-                NSLog("%@", error!)
-            }
+        let userName = defaults.stringForKey("userName")
+
+        // Create an AlarmObject
+        let alarm = PFObject(className: "AlarmObject")
+        alarm.setObject(userName!, forKey: "userName")
+        alarm.setObject(datePicker.date, forKey: "dateTime")
+        alarm.setObject(true, forKey: "active")
+        alarm.setObject(false, forKey: "paired")
+
+        alarm.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            print("Object has been saved.")
         }
         
+        defaults.setObject(alarm.objectId! as String, forKey: "alarmObjectId")
         defaults.setObject(true, forKey: "isAlarmActive")
         
         self.navigationController?.popViewControllerAnimated(true)

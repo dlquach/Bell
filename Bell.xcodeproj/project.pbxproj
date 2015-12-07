@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED128D2A1C15025E00437DBA /* FindUsersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED128D291C15025E00437DBA /* FindUsersController.swift */; };
+		ED128D2C1C150AB100437DBA /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED128D2B1C150AB100437DBA /* UserCell.swift */; };
 		ED65E2B61C10749F008179B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED65E2B51C10749F008179B5 /* AppDelegate.swift */; };
 		ED65E2B91C10749F008179B5 /* Bell.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED65E2B71C10749F008179B5 /* Bell.xcdatamodeld */; };
 		ED65E2BB1C10749F008179B5 /* ClockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED65E2BA1C10749F008179B5 /* ClockController.swift */; };
@@ -34,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ED128D291C15025E00437DBA /* FindUsersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindUsersController.swift; sourceTree = "<group>"; };
+		ED128D2B1C150AB100437DBA /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		ED65E2B21C10749F008179B5 /* Bell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED65E2B51C10749F008179B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED65E2B81C10749F008179B5 /* Bell.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bell.xcdatamodel; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 				ED65E2C61C10749F008179B5 /* Info.plist */,
 				ED65E32F1C107AF5008179B5 /* alarm.mp3 */,
 				ED65E2B71C10749F008179B5 /* Bell.xcdatamodeld */,
+				ED128D291C15025E00437DBA /* FindUsersController.swift */,
+				ED128D2B1C150AB100437DBA /* UserCell.swift */,
 			);
 			path = Bell;
 			sourceTree = "<group>";
@@ -226,6 +232,8 @@
 			files = (
 				EDCF814C1C140AF00052CF77 /* SetAlarmController.swift in Sources */,
 				ED65E2B91C10749F008179B5 /* Bell.xcdatamodeld in Sources */,
+				ED128D2C1C150AB100437DBA /* UserCell.swift in Sources */,
+				ED128D2A1C15025E00437DBA /* FindUsersController.swift in Sources */,
 				ED65E2B61C10749F008179B5 /* AppDelegate.swift in Sources */,
 				ED65E2BB1C10749F008179B5 /* ClockController.swift in Sources */,
 			);
