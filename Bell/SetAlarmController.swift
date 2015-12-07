@@ -34,24 +34,27 @@ class SetAlarmController: UIViewController {
         
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(datePicker.date, forKey: "alarmTime")
-        
-        let userName = defaults.stringForKey("userName")
 
-        // Create an AlarmObject
-        let alarm = PFObject(className: "AlarmObject")
-        alarm.setObject(userName!, forKey: "userName")
-        alarm.setObject(datePicker.date, forKey: "dateTime")
-        alarm.setObject(true, forKey: "active")
-        alarm.setObject(false, forKey: "paired")
-        alarm.setObject("", forKey: "partnerId")
-
-        alarm.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            print("Object has been saved.")
-            defaults.setObject(alarm.objectId! as String, forKey: "myId")
-            defaults.setObject(true, forKey: "isAlarmActive")
-            ClockController.queueUpLocalNotifications(self.datePicker.date)
+        // Modify your AlarmObject
+        let query = PFQuery(className: "AlarmObject")
+        query.getObjectInBackgroundWithId(defaults.stringForKey("myId")!) {
+            (alarm: PFObject?, error: NSError?) -> Void in
+            if (error == nil) {
+                alarm!.setObject(self.datePicker.date, forKey: "dateTime")
+                alarm!.setObject(true, forKey: "active")
+                alarm!.setObject(false, forKey: "paired")
+                alarm!.setObject("", forKey: "partnerId")
+                alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+                    defaults.setObject(true, forKey: "isAlarmActive")
+                    ClockController.queueUpLocalNotifications(self.datePicker.date)
+                    print("Object has been saved.")
+                    print("Set alarm", defaults.boolForKey("isAlarmActive"))
+                    print("Notifications queued")
+                }
+            } else {
+                NSLog("%@", error!)
+            }
         }
-        
         
         self.navigationController?.popViewControllerAnimated(true)
     }

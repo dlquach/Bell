@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.boolForKey("isAlarmActive") == true) {
             if let alarmTime = defaults.objectForKey("alarmTime") {
-                //ClockController.queueUpLocalNotifications(alarmTime as! NSDate)
+                ClockController.queueUpLocalNotifications(alarmTime as! NSDate)
             }
         }
         else {
