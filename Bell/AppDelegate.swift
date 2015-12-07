@@ -59,10 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
-        // Clear all the notifications since the app can take
-        // care of the alarm.
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
     }
 
     func applicationWillTerminate(application: UIApplication) {
