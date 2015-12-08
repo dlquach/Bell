@@ -27,7 +27,7 @@ class FindUsersController: UIViewController, UITableViewDataSource {
         
         let query = PFQuery(className: "AlarmObject")
         query.whereKey("active", equalTo: true)
-        query.whereKey("paired", equalTo: false)    
+        query.whereKey("paired", equalTo: false)
         if let myId = defaults.stringForKey("myId") {
             query.whereKey("objectId", notEqualTo: myId)
         }
@@ -56,7 +56,7 @@ class FindUsersController: UIViewController, UITableViewDataSource {
                 print("Accepted")
             
                 self.setupAlarm(partnerCandidate)
-                self.tableView.reloadData()
+                self.navigationController?.popViewControllerAnimated(true)
             }))
         alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: {
                 (alert: UIAlertAction!) -> Void in
@@ -112,7 +112,10 @@ class FindUsersController: UIViewController, UITableViewDataSource {
                 alarm!["active"] = true
                 alarm!["paired"] = true
                 alarm!["partnerId"] = defaults.stringForKey("myId")
-                alarm!.saveEventually()
+                alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+                    self.tableView.reloadData()
+                    print("Object has been saved.")
+                }
                 print("Updated partners")
             } else {
                 NSLog("%@", error!)

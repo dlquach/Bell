@@ -196,10 +196,14 @@ class ClockController: UIViewController {
         return formatter.stringFromDate(date)
     }
     
-    class func queueUpLocalNotifications(alarmTime: NSDate) {
+    class func queueUpLocalNotifications(var alarmTime: NSDate) {
         let LENGTH_OF_ALARM = 5.0
         
-        for index in 1...100 {
+        // Strip seconds from the date
+        let timeInterval = floor(alarmTime.timeIntervalSinceReferenceDate / 60.0) * 60.0
+        alarmTime = NSDate(timeIntervalSinceReferenceDate: timeInterval)
+        
+        for index in 0...50 {
             let notification = UILocalNotification()
             notification.alertBody = "Wake up!!"
             notification.alertAction = "open"

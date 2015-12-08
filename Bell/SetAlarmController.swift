@@ -46,6 +46,7 @@ class SetAlarmController: UIViewController {
                 alarm!.setObject("", forKey: "partnerId")
                 alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
                     defaults.setObject(true, forKey: "isAlarmActive")
+                    UIApplication.sharedApplication().cancelAllLocalNotifications()
                     ClockController.queueUpLocalNotifications(self.datePicker.date)
                     print("Object has been saved.")
                     print("Set alarm", defaults.boolForKey("isAlarmActive"))
