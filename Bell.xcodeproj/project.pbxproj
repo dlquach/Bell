@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		ED128D2A1C15025E00437DBA /* FindUsersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED128D291C15025E00437DBA /* FindUsersController.swift */; };
 		ED128D2C1C150AB100437DBA /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED128D2B1C150AB100437DBA /* UserCell.swift */; };
+		ED51957D1C165F06008C05AB /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED51957C1C165F06008C05AB /* Util.swift */; };
 		ED65E2B61C10749F008179B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED65E2B51C10749F008179B5 /* AppDelegate.swift */; };
 		ED65E2B91C10749F008179B5 /* Bell.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED65E2B71C10749F008179B5 /* Bell.xcdatamodeld */; };
 		ED65E2BB1C10749F008179B5 /* ClockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED65E2BA1C10749F008179B5 /* ClockController.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		ED128D291C15025E00437DBA /* FindUsersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindUsersController.swift; sourceTree = "<group>"; };
 		ED128D2B1C150AB100437DBA /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		ED51957C1C165F06008C05AB /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		ED65E2B21C10749F008179B5 /* Bell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED65E2B51C10749F008179B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED65E2B81C10749F008179B5 /* Bell.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bell.xcdatamodel; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				ED65E2B71C10749F008179B5 /* Bell.xcdatamodeld */,
 				ED128D291C15025E00437DBA /* FindUsersController.swift */,
 				ED128D2B1C150AB100437DBA /* UserCell.swift */,
+				ED51957C1C165F06008C05AB /* Util.swift */,
 			);
 			path = Bell;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				ED65E2B91C10749F008179B5 /* Bell.xcdatamodeld in Sources */,
 				ED128D2C1C150AB100437DBA /* UserCell.swift in Sources */,
 				ED128D2A1C15025E00437DBA /* FindUsersController.swift in Sources */,
+				ED51957D1C165F06008C05AB /* Util.swift in Sources */,
 				ED65E2B61C10749F008179B5 /* AppDelegate.swift in Sources */,
 				ED65E2BB1C10749F008179B5 /* ClockController.swift in Sources */,
 			);

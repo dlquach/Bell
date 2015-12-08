@@ -32,6 +32,11 @@ class SetAlarmController: UIViewController {
         formatter.timeStyle = .ShortStyle
         print("Selected", formatter.stringFromDate(datePicker.date))
         
+        // If the date collected is BEFORE the current time, advance it by a day.
+        if datePicker.date.isLessThanDate(NSDate()) {
+            datePicker.date = datePicker.date.addDays(1)
+        }
+        
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(datePicker.date, forKey: "alarmTime")
 
