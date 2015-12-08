@@ -124,27 +124,27 @@ class ClockController: UIViewController {
     }
     
     func pollForPartnerStatus() {
-        statusLoop = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: "updatePartnerName", userInfo: nil, repeats: true)
+        statusLoop = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "updatePartnerName", userInfo: nil, repeats: true)
     }
     
     func updatePartnerName() {
-        print("Updating partner name...")
         let defaults = NSUserDefaults.standardUserDefaults()
-        let myId = defaults.stringForKey("myId")
-        let query = PFQuery(className: "AlarmObject")
-        query.getObjectInBackgroundWithId(myId!)	 {
-            (alarm: PFObject?, error: NSError?) -> Void in
-            if (error == nil) {
-                if (alarm!["active"] as! Bool) == false {
-                    // Update your partnerId
-                    if alarm!["paired"] as! Bool {
-                        defaults.setObject(alarm!["partnerId"] as! String, forKey: "partnerId")
-                        defaults.setObject(alarm!["partnerName"] as! String, forKey: "partnerName")
-                        self.updateAlarmStatusLabel()
+        if let myId = defaults.stringForKey("myId") {
+            let query = PFQuery(className: "AlarmObject")
+            query.getObjectInBackgroundWithId(myId)	 {
+                (alarm: PFObject?, error: NSError?) -> Void in
+                if (error == nil) {
+                    if (alarm!["active"] as! Bool) {
+                        // Update your partnerId
+                        if alarm!["paired"] as! Bool {
+                            defaults.setObject(alarm!["partnerId"] as! String, forKey: "partnerId")
+                            defaults.setObject(alarm!["partnerName"] as! String, forKey: "partnerName")
+                            self.updateAlarmStatusLabel()
+                        }
                     }
+                } else {
+                    NSLog("%@", error!)
                 }
-            } else {
-                NSLog("%@", error!)
             }
         }
     }
@@ -176,8 +176,9 @@ class ClockController: UIViewController {
                     self.audioPlayer.stop()
                     self.parseLoop.invalidate()
                     defaults.setObject(false, forKey: "isAlarmActive")
+                    ClockController.removeExistingPairing()
                     UIApplication.sharedApplication().cancelAllLocalNotifications()
-                    print("Set alarm", defaults.boolForKey("isAlarmActive"))
+                    print("Alarm has been turned off.")
                 }
                 else {
                     self.audioPlayer.play()
@@ -262,5 +263,40 @@ class ClockController: UIViewController {
         }
     }
     
+    class func clearPartnerData() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let partnerId = defaults.stringForKey("partnerId") {
+            defaults.removeObjectForKey("partnerName")
+            defaults.removeObjectForKey("partnerId")
+            print("Partner data removed")            
+        }
+        else {
+            print("No partner data exists")
+        }
+    }
+    
+    class func removeExistingPairing() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let partnerId = defaults.stringForKey("partnerId") {
+            let partnerQuery = PFQuery(className: "AlarmObject")
+            partnerQuery.getObjectInBackgroundWithId(partnerId) {
+                (alarm: PFObject?, error: NSError?) -> Void in
+                if (error == nil) {	
+                    alarm!["paired"] = false 
+                    alarm!["partnerId"] = ""
+                    alarm!["partnerName"] = ""
+                    alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+                        ClockController.clearPartnerData()
+                        print("Object has been saved.")
+                    }
+                } else {
+                    NSLog("%@", error!)
+                }
+            }
+        }
+        else {
+            print("No pairing exists")
+        }
+    }
 }
 

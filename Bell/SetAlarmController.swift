@@ -28,14 +28,24 @@ class SetAlarmController: UIViewController {
     }
     
     @IBAction func setAlarmButtonPressed(sender: AnyObject) {
-        let formatter = NSDateFormatter()
-        formatter.timeStyle = .ShortStyle
-        print("Selected", formatter.stringFromDate(datePicker.date))
+
+        // If there is an active pairing, ask the user for confirmation
+        // if they want to remove it and create a new alarm. 
+        ClockController.removeExistingPairing()
         
         // If the date collected is BEFORE the current time, advance it by a day.
+        let formatter = NSDateFormatter()
+        formatter.timeStyle = .ShortStyle
         if datePicker.date.isLessThanDate(NSDate()) {
             datePicker.date = datePicker.date.addDays(1)
         }
+
+        self.createNewAlarmAndSubmit(datePicker.date)
+        
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+
+    func createNewAlarmAndSubmit(date: NSDate) {
         
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(datePicker.date, forKey: "alarmTime")
@@ -45,7 +55,7 @@ class SetAlarmController: UIViewController {
         query.getObjectInBackgroundWithId(defaults.stringForKey("myId")!) {
             (alarm: PFObject?, error: NSError?) -> Void in
             if (error == nil) {
-                alarm!.setObject(self.datePicker.date, forKey: "dateTime")
+                alarm!.setObject(date, forKey: "dateTime")
                 alarm!.setObject(true, forKey: "active")
                 alarm!.setObject(false, forKey: "paired")
                 alarm!.setObject("", forKey: "partnerId")
@@ -53,7 +63,7 @@ class SetAlarmController: UIViewController {
                 alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
                     defaults.setObject(true, forKey: "isAlarmActive")
                     UIApplication.sharedApplication().cancelAllLocalNotifications()
-                    ClockController.queueUpLocalNotifications(self.datePicker.date)
+                    ClockController.queueUpLocalNotifications(date)
                     print("Object has been saved.")
                     print("Set alarm", defaults.boolForKey("isAlarmActive"))
                     print("Notifications queued")
@@ -62,8 +72,6 @@ class SetAlarmController: UIViewController {
                 NSLog("%@", error!)
             }
         }
-        
-        self.navigationController?.popViewControllerAnimated(true)
     }
     
 }

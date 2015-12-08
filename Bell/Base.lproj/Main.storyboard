@@ -103,7 +103,7 @@
                             <userLayoutGuide location="268" affinity="minY"/>
                         </userGuides>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n3x-k5-9Cn">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n3x-k5-9Cn">
                                 <rect key="frame" x="250" y="334" width="100" height="58"/>
                                 <color key="backgroundColor" red="0.94343145750507618" green="0.95757359312880719" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -195,8 +195,13 @@
                                     <!--2015-12-06 03:49:18 +0000-->
                                 </date>
                             </datePicker>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0S-Zo-7of">
-                                <rect key="frame" x="267" y="282" width="67" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0S-Zo-7of">
+                                <rect key="frame" x="239" y="266" width="122" height="56"/>
+                                <color key="backgroundColor" red="0.94343145750000001" green="0.95757359310000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="122" id="2YL-dm-oHt"/>
+                                    <constraint firstAttribute="height" constant="56" id="yQp-8z-zcT"/>
+                                </constraints>
                                 <state key="normal" title="Set Alarm"/>
                                 <connections>
                                     <action selector="setAlarmButtonPressed:" destination="sVg-76-nyc" eventType="touchUpInside" id="CHV-dN-y7Z"/>
@@ -205,11 +210,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Q0S-Zo-7of" firstAttribute="centerX" secondItem="7yT-rT-U9A" secondAttribute="centerX" id="2pE-e6-EUy"/>
                             <constraint firstItem="7yT-rT-U9A" firstAttribute="top" secondItem="FBh-XJ-f1b" secondAttribute="bottom" id="C0R-b7-bTH"/>
                             <constraint firstAttribute="trailing" secondItem="7yT-rT-U9A" secondAttribute="trailing" id="KK1-YI-njd"/>
-                            <constraint firstItem="Q0S-Zo-7of" firstAttribute="top" secondItem="7yT-rT-U9A" secondAttribute="bottom" constant="66" id="Mdh-6u-MWi"/>
                             <constraint firstItem="7yT-rT-U9A" firstAttribute="leading" secondItem="dD1-e4-kOE" secondAttribute="leading" id="YFB-b6-bVw"/>
+                            <constraint firstItem="Q0S-Zo-7of" firstAttribute="top" secondItem="7yT-rT-U9A" secondAttribute="bottom" constant="50" id="a7K-wi-tlr"/>
+                            <constraint firstItem="Q0S-Zo-7of" firstAttribute="centerX" secondItem="7yT-rT-U9A" secondAttribute="centerX" id="lmM-kf-2eg"/>
                         </constraints>
                     </view>
                     <connections>
