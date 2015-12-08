@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import AudioToolbox
 import Parse
+import SpriteKit
 
 class ClockController: UIViewController {
     
@@ -17,6 +18,7 @@ class ClockController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var stopButton: UIButton!
     
+    @IBOutlet var mainView: UIView!
     @IBOutlet weak var headerView: UIView!
     
     
@@ -25,6 +27,8 @@ class ClockController: UIViewController {
     var statusLoop = NSTimer()
     var timer = NSTimer()
     var alarmTime:String? = nil
+    
+    var circleView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +77,10 @@ class ClockController: UIViewController {
         // Update alarm status.
         updatePartnerName()
         updateAlarmStatusLabel()
+        
+        // Set up the stop button
+        stopButton.addTarget(self, action: "stopButtonDown", forControlEvents: UIControlEvents.TouchDown)
+        stopButton.addTarget(self, action: "stopButtonUp", forControlEvents: UIControlEvents.TouchUpInside)
         
     }
     
@@ -125,6 +133,37 @@ class ClockController: UIViewController {
         else {
             
         }
+    }
+    
+    func stopButtonDown() {
+        print("Button down")
+        let initialX = self.stopButton.frame.origin.x + self.stopButton.frame.width/2
+        let initialY = self.stopButton.frame.origin.y + self.stopButton.frame.height/2
+      
+        self.circleView = UIView.init(frame: CGRectMake(initialX, initialY, 10, 10))
+        self.circleView.layer.cornerRadius = self.circleView.frame.width/2
+        self.circleView.backgroundColor = ColorStyles.white
+        self.circleView.alpha = 0
+        self.circleView.clipsToBounds = true
+        self.view.insertSubview(self.circleView, belowSubview: self.headerView)        
+        
+        UIView.animateWithDuration(3, animations: { () -> Void in
+            let scale = CGFloat(100.0);
+            self.circleView.transform = CGAffineTransformMakeScale(scale, scale)
+        })
+        
+        UIView.animateWithDuration(1, animations: { () -> Void in
+            self.circleView.backgroundColor = ColorStyles.teal
+            self.circleView.alpha = 1
+            })
+
+    }
+    
+    func stopButtonUp() {
+        print("Button up")
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.circleView.alpha = 0
+        })
     }
     
     func setupTick() {

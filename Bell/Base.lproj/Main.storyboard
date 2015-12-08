@@ -113,6 +113,19 @@
                             <userLayoutGuide location="268" affinity="minY"/>
                         </userGuides>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n3x-k5-9Cn">
+                                <rect key="frame" x="0.0" y="139" width="600" height="397"/>
+                                <color key="backgroundColor" red="0.94343145750507618" green="0.95757359312880719" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="397" id="661-pM-6OA"/>
+                                    <constraint firstAttribute="width" constant="600" id="TIl-8j-q23"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bariol-Regular" family="Bariol" pointSize="23"/>
+                                <state key="normal" title="Hold Down to Stop Alarm"/>
+                                <connections>
+                                    <action selector="stopButtonPressed:" destination="c1v-NA-fWh" eventType="touchUpInside" id="70X-vT-sa3"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uio-uI-w0c">
                                 <rect key="frame" x="0.0" y="-64" width="600" height="203"/>
                                 <subviews>
@@ -145,19 +158,6 @@
                                     <constraint firstItem="Enf-I4-xAC" firstAttribute="centerX" secondItem="uio-uI-w0c" secondAttribute="centerX" id="t0n-xE-jog"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n3x-k5-9Cn">
-                                <rect key="frame" x="183" y="324" width="234" height="58"/>
-                                <color key="backgroundColor" red="0.94343145750507618" green="0.95757359312880719" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="58" id="661-pM-6OA"/>
-                                    <constraint firstAttribute="width" constant="234" id="TIl-8j-q23"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Bariol-Regular" family="Bariol" pointSize="15"/>
-                                <state key="normal" title="Stop"/>
-                                <connections>
-                                    <action selector="stopButtonPressed:" destination="c1v-NA-fWh" eventType="touchUpInside" id="70X-vT-sa3"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -165,7 +165,7 @@
                             <constraint firstItem="n3x-k5-9Cn" firstAttribute="centerX" secondItem="uio-uI-w0c" secondAttribute="centerX" id="E0i-dg-LYX"/>
                             <constraint firstAttribute="trailing" secondItem="uio-uI-w0c" secondAttribute="trailing" id="Eds-4L-enl"/>
                             <constraint firstItem="uio-uI-w0c" firstAttribute="top" secondItem="qHt-1w-OyE" secondAttribute="topMargin" constant="-64" id="GTm-QJ-Vkz"/>
-                            <constraint firstItem="yMa-cp-ZX3" firstAttribute="top" secondItem="n3x-k5-9Cn" secondAttribute="bottom" constant="154" id="LfD-hN-gKz"/>
+                            <constraint firstItem="yMa-cp-ZX3" firstAttribute="top" secondItem="n3x-k5-9Cn" secondAttribute="bottom" id="LfD-hN-gKz"/>
                             <constraint firstAttribute="bottom" secondItem="uio-uI-w0c" secondAttribute="bottom" constant="397" id="mUm-zW-ZVo"/>
                         </constraints>
                     </view>
@@ -184,6 +184,7 @@
                     <connections>
                         <outlet property="alarmStatusLabel" destination="0oj-U3-D1c" id="4C4-fS-hQ2"/>
                         <outlet property="headerView" destination="uio-uI-w0c" id="FT9-a9-6dU"/>
+                        <outlet property="mainView" destination="qHt-1w-OyE" id="pTJ-Le-PuU"/>
                         <outlet property="stopButton" destination="n3x-k5-9Cn" id="SzQ-55-qwI"/>
                         <outlet property="timeLabel" destination="Enf-I4-xAC" id="Lhq-05-zKq"/>
                     </connections>
