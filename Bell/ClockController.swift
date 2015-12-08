@@ -100,39 +100,12 @@ class ClockController: UIViewController {
             
         // Re-enable the status bar
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-        
-        
 
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func stopButtonPressed(sender: AnyObject) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
-        // Disable your partner's alarm if you have one
-        // If you don't have a partner, just disable your own alarm.
-        if let partnerId = defaults.stringForKey("partnerId") {
-        print(partnerId)
-        let query = PFQuery(className: "AlarmObject")
-            query.getObjectInBackgroundWithId(partnerId) {
-                (alarm: PFObject?, error: NSError?) -> Void in
-                if (error == nil) {
-                    alarm!["active"] = false
-                    alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-                    print("Object has been saved.")
-                    }
-                } else {
-                    NSLog("%@", error!)
-                }
-            }
-        }
-        else {
-            
-        }
     }
     
     func stopButtonDown() {
@@ -147,14 +120,37 @@ class ClockController: UIViewController {
         self.circleView.clipsToBounds = true
         self.view.insertSubview(self.circleView, belowSubview: self.headerView)        
         
-        UIView.animateWithDuration(3, animations: { () -> Void in
-            let scale = CGFloat(100.0);
-            self.circleView.transform = CGAffineTransformMakeScale(scale, scale)
-        })
         
-        UIView.animateWithDuration(1, animations: { () -> Void in
+        
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.circleView.backgroundColor = ColorStyles.teal
             self.circleView.alpha = 1
+            })
+        UIView.animateWithDuration(2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                let scale = CGFloat(70);
+                self.circleView.transform = CGAffineTransformMakeScale(scale, scale)
+            }, completion: {(finished: Bool) in
+                    print("Finished animation")
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    
+                    // Disable your partner's alarm if you have one
+                    // If you don't have a partner, just disable your own alarm.
+                    if let partnerId = defaults.stringForKey("partnerId") {
+                        print(partnerId)
+                        let query = PFQuery(className: "AlarmObject")
+                        query.getObjectInBackgroundWithId(partnerId) {
+                            (alarm: PFObject?, error: NSError?) -> Void in
+                            if (error == nil) {
+                                alarm!["active"] = false
+                                alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+                                    print("Object has been saved.")
+                                }
+                            } else {
+                                NSLog("%@", error!)
+                            }
+                        }
+                    }
+
             })
 
     }
