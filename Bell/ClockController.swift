@@ -124,7 +124,7 @@ class ClockController: UIViewController {
     }
     
     func pollForPartnerStatus() {
-        statusLoop = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "updatePartnerName", userInfo: nil, repeats: true)
+        statusLoop = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "updatePartnerName", userInfo: nil, repeats: true)
     }
     
     func updatePartnerName() {
@@ -139,8 +139,12 @@ class ClockController: UIViewController {
                         if alarm!["paired"] as! Bool {
                             defaults.setObject(alarm!["partnerId"] as! String, forKey: "partnerId")
                             defaults.setObject(alarm!["partnerName"] as! String, forKey: "partnerName")
-                            self.updateAlarmStatusLabel()
                         }
+                        else {
+                            defaults.removeObjectForKey("partnerId")
+                            defaults.removeObjectForKey("partnerName")
+                        }
+                        self.updateAlarmStatusLabel()
                     }
                 } else {
                     NSLog("%@", error!)
@@ -211,7 +215,6 @@ class ClockController: UIViewController {
 
         // Always check to see if alarms need to be stopped
         if defaults.boolForKey("isAlarmActive") {
-            print("we active")
             // Check if am alarm should be triggered.
             let defaults = NSUserDefaults.standardUserDefaults()
             if let alarmTime = defaults.objectForKey("alarmTime") {
@@ -220,9 +223,6 @@ class ClockController: UIViewController {
                     if !parseLoop.valid {
                         waitForStopMessage() 
                     }
-                }
-                else {
-                    print("Alarm is at", stringTime, "but it is", theTime)
                 }
             }
             
