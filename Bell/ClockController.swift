@@ -89,18 +89,19 @@ class ClockController: UIViewController {
         let defaults = NSUserDefaults.standardUserDefaults()
         
         // Disable your partner's alarm if you have one
-        let partnerId = defaults.stringForKey("partnerId")
+        if let partnerId = defaults.stringForKey("partnerId") {
         print(partnerId)
         let query = PFQuery(className: "AlarmObject")
-        query.getObjectInBackgroundWithId(partnerId!) {
-            (alarm: PFObject?, error: NSError?) -> Void in
-            if (error == nil) {
-                alarm!["active"] = false
-                alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            query.getObjectInBackgroundWithId(partnerId) {
+                (alarm: PFObject?, error: NSError?) -> Void in
+                if (error == nil) {
+                    alarm!["active"] = false
+                    alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
                     print("Object has been saved.")
+                    }
+                } else {
+                    NSLog("%@", error!)
                 }
-            } else {
-                NSLog("%@", error!)
             }
         }
     }
