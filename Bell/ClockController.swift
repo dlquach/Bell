@@ -256,15 +256,26 @@ class ClockController: UIViewController {
         if defaults.boolForKey("isAlarmActive") {
             let alarmTime = ClockController.convertDateToHM(defaults.objectForKey("alarmTime") as! NSDate)
             if let partnerName = defaults.stringForKey("partnerName") {
-                self.alarmStatusLabel.text = "You will wake up with " + partnerName + " at " + alarmTime + "."
+                if parseLoop.valid {
+                    self.alarmStatusLabel.text = "Waiting on " + (defaults.stringForKey("partnerName"))! + "!"
+                }
+                else {
+                    self.alarmStatusLabel.text = "You will wake up with " + partnerName + " at " + alarmTime + "."
+                }
             }
             else {
-                self.alarmStatusLabel.text = "You will wake up at " + alarmTime + "."
+                if parseLoop.valid {
+                    self.alarmStatusLabel.text = "Wake up!"
+                }
+                else {
+                    self.alarmStatusLabel.text = "You will wake up at " + alarmTime + "."
+                }
             }
         }
         else {
             self.alarmStatusLabel.text = "Your alarm is off."
         }
+        
     }
     
     func handleAlarmObjectState() {
@@ -316,7 +327,7 @@ class ClockController: UIViewController {
                 let stringTime = ClockController.convertDateToHM(alarmTime as! NSDate)
                 if stringTime == checkTime {
                     if !parseLoop.valid {
-                        waitForStopMessage() 
+                        waitForStopMessage()
                     }
                 }
             }
@@ -326,7 +337,6 @@ class ClockController: UIViewController {
             self.audioPlayer.stop()
             UIApplication.sharedApplication().cancelAllLocalNotifications()
         }
-        
         updateAlarmStatusLabel()
         
     }
@@ -366,7 +376,7 @@ class ClockController: UIViewController {
     
     class func clearPartnerData() {
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let partnerId = defaults.stringForKey("partnerId") {
+        if let _ = defaults.stringForKey("partnerId") {
             defaults.removeObjectForKey("partnerName")
             defaults.removeObjectForKey("partnerId")
             print("Partner data removed")            
