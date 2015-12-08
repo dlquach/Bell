@@ -65,7 +65,7 @@ class FindUsersController: UIViewController, UITableViewDataSource {
             
             
         self.presentViewController(alert, animated: true, completion: nil)
-        
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func setupAlarm(alarmObject: PFObject) {
@@ -91,6 +91,7 @@ class FindUsersController: UIViewController, UITableViewDataSource {
                 alarm!["active"] = true
                 alarm!["paired"] = true
                 alarm!["partnerId"] = partnerId
+                alarm!["partnerName"] = partnerName
                 alarm!.setObject(alarmTime, forKey: "dateTime")
                 alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
                     defaults.setObject(true, forKey: "isAlarmActive")
@@ -112,6 +113,7 @@ class FindUsersController: UIViewController, UITableViewDataSource {
                 alarm!["active"] = true
                 alarm!["paired"] = true
                 alarm!["partnerId"] = defaults.stringForKey("myId")
+                alarm!["partnerName"] = defaults.stringForKey("myName")
                 alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
                     self.tableView.reloadData()
                     print("Object has been saved.")
@@ -134,7 +136,6 @@ class FindUsersController: UIViewController, UITableViewDataSource {
         indexPath: NSIndexPath) -> UITableViewCell {
             let cell =
             tableView.dequeueReusableCellWithIdentifier("userCell") as! UserCell
-            
             cell.userNameLabel.text = (users[indexPath.row]["userName"] as! String)
             cell.dateLabel.text = (ClockController.convertDateToHM(users[indexPath.row]["dateTime"] as! NSDate))
             

@@ -49,6 +49,7 @@ class SetAlarmController: UIViewController {
                 alarm!.setObject(true, forKey: "active")
                 alarm!.setObject(false, forKey: "paired")
                 alarm!.setObject("", forKey: "partnerId")
+                alarm!.setObject("", forKey: "partnerName")
                 alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
                     defaults.setObject(true, forKey: "isAlarmActive")
                     UIApplication.sharedApplication().cancelAllLocalNotifications()

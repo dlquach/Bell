@@ -13,11 +13,12 @@ import Parse
 
 class ClockController: UIViewController {
     
+    @IBOutlet weak var alarmStatusLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var stopButton: UIButton!
-    @IBOutlet weak var startButton: UIButton!
     var audioPlayer = AVAudioPlayer()
     var parseLoop = NSTimer()
+    var statusLoop = NSTimer()
     var timer = NSTimer()
     var alarmTime:String? = nil
     
@@ -28,9 +29,10 @@ class ClockController: UIViewController {
         // Display the current time.
         timeLabel.text = getCurrentTime()
         
+        
         // Check to see if user has registered.
         let defaults = NSUserDefaults.standardUserDefaults()
-        if (defaults.objectForKey("userName") == nil) {
+        if (defaults.objectForKey("myName") == nil) {
             let altMessage = UIAlertController(title: "Welcome to Bell!", message: "Please enter your name.", preferredStyle: UIAlertControllerStyle.Alert)
             altMessage.addTextFieldWithConfigurationHandler {
                 (textField) -> Void in
@@ -51,7 +53,7 @@ class ClockController: UIViewController {
                         print("Object has been saved.")
                         defaults.setObject(user.objectId! as String, forKey: "myId")
                         defaults.setObject(false, forKey: "isAlarmActive")
-                        defaults.setObject(userName!, forKey: "userName")
+                        defaults.setObject(userName!, forKey: "myName")
                         self.setupTick()
                     }
                 
@@ -62,27 +64,25 @@ class ClockController: UIViewController {
             setupTick()
         }
         
+        pollForPartnerStatus()
+        
+        // Update alarm status.
+        updatePartnerName()
+        updateAlarmStatusLabel()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        // Update alarm status.
+        updatePartnerName()
+        updateAlarmStatusLabel()
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func startButtonPressed(sender: AnyObject) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let query = PFQuery(className: "AlarmObject")
-        query.getObjectInBackgroundWithId(defaults.stringForKey("myId")!) {
-            (alarm: PFObject?, error: NSError?) -> Void in
-            if (error == nil) {
-                alarm!["active"] = "true"
-                alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-                    print("Object has been saved.")
-                }
-            } else {
-                NSLog("%@", error!)
-            }
-        }
     }
     
     @IBAction func stopButtonPressed(sender: AnyObject) {
@@ -123,6 +123,48 @@ class ClockController: UIViewController {
         parseLoop = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "handleAlarmObjectState", userInfo: nil, repeats: true)
     }
     
+    func pollForPartnerStatus() {
+        statusLoop = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: "updatePartnerName", userInfo: nil, repeats: true)
+    }
+    
+    func updatePartnerName() {
+        print("Updating partner name...")
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let myId = defaults.stringForKey("myId")
+        let query = PFQuery(className: "AlarmObject")
+        query.getObjectInBackgroundWithId(myId!)	 {
+            (alarm: PFObject?, error: NSError?) -> Void in
+            if (error == nil) {
+                if (alarm!["active"] as! Bool) == false {
+                    // Update your partnerId
+                    if alarm!["paired"] as! Bool {
+                        defaults.setObject(alarm!["partnerId"] as! String, forKey: "partnerId")
+                        defaults.setObject(alarm!["partnerName"] as! String, forKey: "partnerName")
+                        self.updateAlarmStatusLabel()
+                    }
+                }
+            } else {
+                NSLog("%@", error!)
+            }
+        }
+    }
+    
+    func updateAlarmStatusLabel() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if defaults.boolForKey("isAlarmActive") {
+            let alarmTime = ClockController.convertDateToHM(defaults.objectForKey("alarmTime") as! NSDate)
+            if let partnerName = defaults.stringForKey("partnerName") {
+                self.alarmStatusLabel.text = "You will wake up with " + partnerName + " at " + alarmTime + "."
+            }
+            else {
+                self.alarmStatusLabel.text = "You will wake up at " + alarmTime + "."
+            }
+        }
+        else {
+            self.alarmStatusLabel.text = "Your alarm is off."
+        }
+    }
+    
     func handleAlarmObjectState() {
         let defaults = NSUserDefaults.standardUserDefaults()
         let myId = defaults.stringForKey("myId")
@@ -144,6 +186,7 @@ class ClockController: UIViewController {
                 // Update your partnerId
                 if alarm!["paired"] as! Bool {
                     defaults.setObject(alarm!["partnerId"] as! String, forKey: "partnerId")
+                    defaults.setObject(alarm!["partnerName"] as! String, forKey: "partnerName")
                 }
             } else {
                 NSLog("%@", error!)
@@ -184,10 +227,12 @@ class ClockController: UIViewController {
             
         }
         else {
-            print ("nope")
             self.audioPlayer.stop()
             UIApplication.sharedApplication().cancelAllLocalNotifications()
         }
+        
+        updateAlarmStatusLabel()
+        
     }
 
     // Class functions that should be moved elsewhere eventaully
