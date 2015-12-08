@@ -58,6 +58,7 @@ class SetAlarmController: UIViewController {
                 alarm!.setObject(date, forKey: "dateTime")
                 alarm!.setObject(true, forKey: "active")
                 alarm!.setObject(false, forKey: "paired")
+                alarm!.setObject(false, forKey: "partnerReady")
                 alarm!.setObject("", forKey: "partnerId")
                 alarm!.setObject("", forKey: "partnerName")
                 alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in

@@ -55,6 +55,7 @@ class ClockController: UIViewController {
                     user.setObject(NSDate(), forKey: "dateTime")
                     user.setObject(false, forKey: "active")
                     user.setObject(false, forKey: "paired")
+                    user.setObject(false, forKey: "partnerReady")
                     user.setObject("", forKey: "partnerId")
 
                     user.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
@@ -133,7 +134,7 @@ class ClockController: UIViewController {
                     print("Finished animation")
                     let defaults = NSUserDefaults.standardUserDefaults()
                     
-                    // Disable your partner's alarm if you have one
+                    // Ready up to disable your partner's alarm if you have one
                     // If you don't have a partner, just disable your own alarm.
                     if let partnerId = defaults.stringForKey("partnerId") {
                         print(partnerId)
@@ -141,10 +142,37 @@ class ClockController: UIViewController {
                         query.getObjectInBackgroundWithId(partnerId) {
                             (alarm: PFObject?, error: NSError?) -> Void in
                             if (error == nil) {
-                                alarm!["active"] = false
+                                alarm!["partnerReady"] = true
                                 alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-                                    print("Object has been saved.")
+                                    // See if your partner is ready. If so, deactivate alarms.
+                                    let selfQuery = PFQuery(className: "AlarmObject")
+                                    selfQuery.getObjectInBackgroundWithId(defaults.stringForKey("myId")!) {
+                                        (selfAlarm: PFObject?, error: NSError?) -> Void in
+                                        if (error == nil) {
+                                            if selfAlarm!["partnerReady"] as! Bool {
+                                                selfAlarm!["active"] = false  
+                                                alarm!["active"] = false  
+                                                selfAlarm!.saveInBackground()
+                                                alarm!.saveInBackground()
+                                            }
+                                        } else {
+                                            NSLog("%@", error!)
+                                        }
+                                    }
+
                                 }
+                            } else {
+                                NSLog("%@", error!)
+                            }
+                        }
+                    }
+                    else {
+                        let query = PFQuery(className: "AlarmObject")
+                        query.getObjectInBackgroundWithId(defaults.stringForKey("myId")!) {
+                            (alarm: PFObject?, error: NSError?) -> Void in
+                            if (error == nil) {
+                                alarm!["active"] = false
+                                alarm!.saveInBackground()
                             } else {
                                 NSLog("%@", error!)
                             }
@@ -160,6 +188,20 @@ class ClockController: UIViewController {
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.circleView.alpha = 0
         })
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let partnerId = defaults.stringForKey("partnerId") {
+            print(partnerId)
+            let query = PFQuery(className: "AlarmObject")
+            query.getObjectInBackgroundWithId(partnerId) {
+                (alarm: PFObject?, error: NSError?) -> Void in
+                if (error == nil) {
+                    alarm!["partnerReady"] = false
+                    alarm!.saveInBackground()
+                } else {
+                    NSLog("%@", error!)
+                }
+            }
+        }
     }
     
     func setupTick() {
@@ -344,6 +386,7 @@ class ClockController: UIViewController {
                     alarm!["paired"] = false 
                     alarm!["partnerId"] = ""
                     alarm!["partnerName"] = ""
+                    alarm!["partnerReady"] = false
                     alarm!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
                         ClockController.clearPartnerData()
                         print("Object has been saved.")
