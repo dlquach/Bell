@@ -16,6 +16,10 @@ class ClockController: UIViewController {
     @IBOutlet weak var alarmStatusLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var stopButton: UIButton!
+    
+    @IBOutlet weak var headerView: UIView!
+    
+    
     var audioPlayer = AVAudioPlayer()
     var parseLoop = NSTimer()
     var statusLoop = NSTimer()
@@ -27,7 +31,7 @@ class ClockController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         // Display the current time.
-        timeLabel.text = getCurrentTime()
+        timeLabel.text = ClockController.convertDateToHMS(NSDate())
         
         
         // Check to see if user has registered.
@@ -78,6 +82,19 @@ class ClockController: UIViewController {
         updatePartnerName()
         updateAlarmStatusLabel()
         
+        // Set header colors
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.barTintColor = ColorStyles.teal
+        self.navigationController?.navigationBar.tintColor = ColorStyles.white
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName :ColorStyles.white]
+        self.headerView.backgroundColor = ColorStyles.teal
+            
+        // Re-enable the status bar
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        
+        
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -89,6 +106,7 @@ class ClockController: UIViewController {
         let defaults = NSUserDefaults.standardUserDefaults()
         
         // Disable your partner's alarm if you have one
+        // If you don't have a partner, just disable your own alarm.
         if let partnerId = defaults.stringForKey("partnerId") {
         print(partnerId)
         let query = PFQuery(className: "AlarmObject")
@@ -103,6 +121,9 @@ class ClockController: UIViewController {
                     NSLog("%@", error!)
                 }
             }
+        }
+        else {
+            
         }
     }
     
@@ -198,19 +219,16 @@ class ClockController: UIViewController {
             }
         }
     }
-   
-    func getCurrentTime() -> String {
-        let date = NSDate()
-        return ClockController.convertDateToHM(date)
-    }
     
     func tick() {
-        let theTime = getCurrentTime()
+        let theTime = ClockController.convertDateToHMS(NSDate())
+        let checkTime = ClockController.convertDateToHM(NSDate())
         
         // Display the current time.
         if timeLabel.text != theTime {
             timeLabel.text = theTime
         }
+        
         let defaults = NSUserDefaults.standardUserDefaults()
 
         // Always check to see if alarms need to be stopped
@@ -219,7 +237,7 @@ class ClockController: UIViewController {
             let defaults = NSUserDefaults.standardUserDefaults()
             if let alarmTime = defaults.objectForKey("alarmTime") {
                 let stringTime = ClockController.convertDateToHM(alarmTime as! NSDate)
-                if stringTime == theTime {
+                if stringTime == checkTime {
                     if !parseLoop.valid {
                         waitForStopMessage() 
                     }
@@ -240,6 +258,12 @@ class ClockController: UIViewController {
     class func convertDateToHM(date: NSDate) -> String {
         let formatter = NSDateFormatter()
         formatter.timeStyle = .ShortStyle
+        return formatter.stringFromDate(date)
+    }
+    
+    class func convertDateToHMS(date: NSDate) -> String {
+        let formatter = NSDateFormatter()
+        formatter.timeStyle = .MediumStyle
         return formatter.stringFromDate(date)
     }
     

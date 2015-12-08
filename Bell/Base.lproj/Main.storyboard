@@ -5,6 +5,16 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Bariol.ttf">
+            <string>Bariol-Regular</string>
+            <string>Bariol-Regular</string>
+            <string>Bariol-Regular</string>
+            <string>Bariol-Regular</string>
+            <string>Bariol-Regular</string>
+            <string>Bariol-Regular</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="lOY-3m-hOU">
@@ -43,13 +53,13 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="177" id="mfL-CQ-7sE"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" name="Bariol-Regular" family="Bariol" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVn-AR-qT2">
                                             <rect key="frame" x="556" y="15" width="36" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" name="Bariol-Regular" family="Bariol" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -95,7 +105,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <userGuides>
                             <userLayoutGuide location="324" affinity="minY"/>
-                            <userLayoutGuide location="268" affinity="minY"/>
+                            <userLayoutGuide location="449" affinity="minY"/>
                             <userLayoutGuide location="234" affinity="minY"/>
                             <userLayoutGuide location="268" affinity="minY"/>
                             <userLayoutGuide location="268" affinity="minY"/>
@@ -103,58 +113,61 @@
                             <userLayoutGuide location="268" affinity="minY"/>
                         </userGuides>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uio-uI-w0c">
+                                <rect key="frame" x="0.0" y="-64" width="600" height="203"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Enf-I4-xAC">
+                                        <rect key="frame" x="105" y="81" width="391" height="73"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="391" id="reB-jD-E9K"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Bariol-Regular" family="Bariol" pointSize="40"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0oj-U3-D1c">
+                                        <rect key="frame" x="105" y="158" width="391" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="gZA-W1-gSz"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Bariol-Regular" family="Bariol" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Enf-I4-xAC" secondAttribute="bottom" constant="49" id="Eht-Oh-gde"/>
+                                    <constraint firstAttribute="bottom" secondItem="0oj-U3-D1c" secondAttribute="bottom" constant="24" id="Zkh-5c-Fes"/>
+                                    <constraint firstItem="Enf-I4-xAC" firstAttribute="trailing" secondItem="0oj-U3-D1c" secondAttribute="trailing" id="bS7-ti-hhR"/>
+                                    <constraint firstItem="Enf-I4-xAC" firstAttribute="top" secondItem="uio-uI-w0c" secondAttribute="top" constant="81" id="lwZ-bj-l6b"/>
+                                    <constraint firstItem="Enf-I4-xAC" firstAttribute="leading" secondItem="0oj-U3-D1c" secondAttribute="leading" id="mkE-Wh-kwo"/>
+                                    <constraint firstItem="Enf-I4-xAC" firstAttribute="centerX" secondItem="uio-uI-w0c" secondAttribute="centerX" id="t0n-xE-jog"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n3x-k5-9Cn">
-                                <rect key="frame" x="250" y="334" width="100" height="58"/>
+                                <rect key="frame" x="183" y="324" width="234" height="58"/>
                                 <color key="backgroundColor" red="0.94343145750507618" green="0.95757359312880719" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="3Pe-Yq-f3V"/>
-                                    <constraint firstAttribute="height" constant="58" id="aZa-7x-ek7"/>
+                                    <constraint firstAttribute="height" constant="58" id="661-pM-6OA"/>
+                                    <constraint firstAttribute="width" constant="234" id="TIl-8j-q23"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="Bariol-Regular" family="Bariol" pointSize="15"/>
                                 <state key="normal" title="Stop"/>
                                 <connections>
                                     <action selector="stopButtonPressed:" destination="c1v-NA-fWh" eventType="touchUpInside" id="70X-vT-sa3"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="WSa-Be-NtJ">
-                                <rect key="frame" x="105" y="48" width="391" height="119"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2ug-ai-0oO">
-                                <rect key="frame" x="105" y="175" width="391" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="391" id="iyc-hX-FGS"/>
-                                    <constraint firstAttribute="height" constant="21" id="z6A-ST-KE7"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="WSa-Be-NtJ" secondAttribute="trailing" constant="261" id="D7R-GP-V4B"/>
-                            <constraint firstItem="WSa-Be-NtJ" firstAttribute="leading" secondItem="qHt-1w-OyE" secondAttribute="leadingMargin" constant="261" id="FIf-gM-FpY"/>
-                            <constraint firstItem="WSa-Be-NtJ" firstAttribute="centerX" secondItem="n3x-k5-9Cn" secondAttribute="centerX" id="IVT-X1-HJl"/>
-                            <constraint firstItem="yMa-cp-ZX3" firstAttribute="top" secondItem="WSa-Be-NtJ" secondAttribute="bottom" constant="290" id="OWD-Bp-iel"/>
-                            <constraint firstItem="WSa-Be-NtJ" firstAttribute="top" secondItem="hym-Lg-6Re" secondAttribute="bottom" constant="269" id="Rjm-oh-qFH"/>
-                            <constraint firstItem="n3x-k5-9Cn" firstAttribute="top" secondItem="WSa-Be-NtJ" secondAttribute="bottom" constant="167" id="aXs-Da-gE1"/>
-                            <constraint firstItem="WSa-Be-NtJ" firstAttribute="top" secondItem="hym-Lg-6Re" secondAttribute="bottom" constant="48" id="ffF-GB-sv0"/>
-                            <constraint firstItem="n3x-k5-9Cn" firstAttribute="centerX" secondItem="qHt-1w-OyE" secondAttribute="centerX" id="hw4-iR-rva"/>
-                            <constraint firstItem="yMa-cp-ZX3" firstAttribute="top" secondItem="n3x-k5-9Cn" secondAttribute="bottom" constant="144" id="iUs-07-CkK"/>
-                            <constraint firstItem="WSa-Be-NtJ" firstAttribute="leading" secondItem="qHt-1w-OyE" secondAttribute="leadingMargin" constant="85" id="n2Q-pq-TT6"/>
-                            <constraint firstItem="2ug-ai-0oO" firstAttribute="top" secondItem="WSa-Be-NtJ" secondAttribute="bottom" constant="8" symbolic="YES" id="uLQ-zf-Vt3"/>
-                            <constraint firstItem="2ug-ai-0oO" firstAttribute="centerX" secondItem="WSa-Be-NtJ" secondAttribute="centerX" id="yKZ-lC-wbV"/>
+                            <constraint firstItem="uio-uI-w0c" firstAttribute="leading" secondItem="qHt-1w-OyE" secondAttribute="leading" id="8Q6-ZY-ilr"/>
+                            <constraint firstItem="n3x-k5-9Cn" firstAttribute="centerX" secondItem="uio-uI-w0c" secondAttribute="centerX" id="E0i-dg-LYX"/>
+                            <constraint firstAttribute="trailing" secondItem="uio-uI-w0c" secondAttribute="trailing" id="Eds-4L-enl"/>
+                            <constraint firstItem="uio-uI-w0c" firstAttribute="top" secondItem="qHt-1w-OyE" secondAttribute="topMargin" constant="-64" id="GTm-QJ-Vkz"/>
+                            <constraint firstItem="yMa-cp-ZX3" firstAttribute="top" secondItem="n3x-k5-9Cn" secondAttribute="bottom" constant="154" id="LfD-hN-gKz"/>
+                            <constraint firstAttribute="bottom" secondItem="uio-uI-w0c" secondAttribute="bottom" constant="397" id="mUm-zW-ZVo"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="D7R-GP-V4B"/>
-                                <exclude reference="FIf-gM-FpY"/>
-                                <exclude reference="Rjm-oh-qFH"/>
-                                <exclude reference="OWD-Bp-iel"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Bell" id="OA2-kx-4so">
                         <barButtonItem key="leftBarButtonItem" title="Find Friends" id="iDS-GF-z8o">
@@ -169,8 +182,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="alarmStatusLabel" destination="2ug-ai-0oO" id="aUU-uy-Ahl"/>
-                        <outlet property="timeLabel" destination="WSa-Be-NtJ" id="Ngh-xS-iEc"/>
+                        <outlet property="alarmStatusLabel" destination="0oj-U3-D1c" id="4C4-fS-hQ2"/>
+                        <outlet property="headerView" destination="uio-uI-w0c" id="FT9-a9-6dU"/>
+                        <outlet property="stopButton" destination="n3x-k5-9Cn" id="SzQ-55-qwI"/>
+                        <outlet property="timeLabel" destination="Enf-I4-xAC" id="Lhq-05-zKq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YIA-90-f3R" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -195,13 +210,14 @@
                                     <!--2015-12-06 03:49:18 +0000-->
                                 </date>
                             </datePicker>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0S-Zo-7of">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0S-Zo-7of">
                                 <rect key="frame" x="239" y="266" width="122" height="56"/>
                                 <color key="backgroundColor" red="0.94343145750000001" green="0.95757359310000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="122" id="2YL-dm-oHt"/>
                                     <constraint firstAttribute="height" constant="56" id="yQp-8z-zcT"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="Bariol-Regular" family="Bariol" pointSize="15"/>
                                 <state key="normal" title="Set Alarm"/>
                                 <connections>
                                     <action selector="setAlarmButtonPressed:" destination="sVg-76-nyc" eventType="touchUpInside" id="CHV-dN-y7Z"/>

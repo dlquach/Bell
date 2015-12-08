@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		ED128D2A1C15025E00437DBA /* FindUsersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED128D291C15025E00437DBA /* FindUsersController.swift */; };
 		ED128D2C1C150AB100437DBA /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED128D2B1C150AB100437DBA /* UserCell.swift */; };
+		ED4957721C16C98E00D3C0E5 /* Bariol.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED4957711C16C98E00D3C0E5 /* Bariol.ttf */; };
 		ED51957D1C165F06008C05AB /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED51957C1C165F06008C05AB /* Util.swift */; };
 		ED65E2B61C10749F008179B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED65E2B51C10749F008179B5 /* AppDelegate.swift */; };
 		ED65E2B91C10749F008179B5 /* Bell.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED65E2B71C10749F008179B5 /* Bell.xcdatamodeld */; };
@@ -33,12 +34,15 @@
 		ED65E2EA1C107552008179B5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65E2E91C107552008179B5 /* libz.tbd */; };
 		ED65E2EC1C107558008179B5 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65E2EB1C107558008179B5 /* libsqlite3.tbd */; };
 		ED65E3301C107AF5008179B5 /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ED65E32F1C107AF5008179B5 /* alarm.mp3 */; };
+		ED7B26C51C16CF7500D06862 /* ColorStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7B26C41C16CF7500D06862 /* ColorStyles.swift */; };
+		ED7B26C71C16D15100D06862 /* UIBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7B26C61C16D15100D06862 /* UIBarExtension.swift */; };
 		EDCF814C1C140AF00052CF77 /* SetAlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCF814B1C140AF00052CF77 /* SetAlarmController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		ED128D291C15025E00437DBA /* FindUsersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindUsersController.swift; sourceTree = "<group>"; };
 		ED128D2B1C150AB100437DBA /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		ED4957711C16C98E00D3C0E5 /* Bariol.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bariol.ttf; sourceTree = "<group>"; };
 		ED51957C1C165F06008C05AB /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		ED65E2B21C10749F008179B5 /* Bell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED65E2B51C10749F008179B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +69,8 @@
 		ED65E2E91C107552008179B5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		ED65E2EB1C107558008179B5 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		ED65E32F1C107AF5008179B5 /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
+		ED7B26C41C16CF7500D06862 /* ColorStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorStyles.swift; sourceTree = "<group>"; };
+		ED7B26C61C16D15100D06862 /* UIBarExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarExtension.swift; sourceTree = "<group>"; };
 		EDCF814B1C140AF00052CF77 /* SetAlarmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetAlarmController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +101,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED49576E1C16C95000D3C0E5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ED65E32F1C107AF5008179B5 /* alarm.mp3 */,
+				ED7B26C41C16CF7500D06862 /* ColorStyles.swift */,
+				ED4957711C16C98E00D3C0E5 /* Bariol.ttf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		ED65E2A91C10749F008179B5 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +131,7 @@
 		ED65E2B41C10749F008179B5 /* Bell */ = {
 			isa = PBXGroup;
 			children = (
+				ED49576E1C16C95000D3C0E5 /* Supporting Files */,
 				ED65E2B51C10749F008179B5 /* AppDelegate.swift */,
 				ED65E2BA1C10749F008179B5 /* ClockController.swift */,
 				EDCF814B1C140AF00052CF77 /* SetAlarmController.swift */,
@@ -122,9 +139,9 @@
 				ED65E2C11C10749F008179B5 /* Assets.xcassets */,
 				ED65E2C31C10749F008179B5 /* LaunchScreen.storyboard */,
 				ED65E2C61C10749F008179B5 /* Info.plist */,
-				ED65E32F1C107AF5008179B5 /* alarm.mp3 */,
 				ED65E2B71C10749F008179B5 /* Bell.xcdatamodeld */,
 				ED128D291C15025E00437DBA /* FindUsersController.swift */,
+				ED7B26C61C16D15100D06862 /* UIBarExtension.swift */,
 				ED128D2B1C150AB100437DBA /* UserCell.swift */,
 				ED51957C1C165F06008C05AB /* Util.swift */,
 			);
@@ -221,6 +238,7 @@
 			files = (
 				ED65E2C51C10749F008179B5 /* LaunchScreen.storyboard in Resources */,
 				ED65E2C21C10749F008179B5 /* Assets.xcassets in Resources */,
+				ED4957721C16C98E00D3C0E5 /* Bariol.ttf in Resources */,
 				ED65E3301C107AF5008179B5 /* alarm.mp3 in Resources */,
 				ED65E2C01C10749F008179B5 /* Main.storyboard in Resources */,
 			);
@@ -237,9 +255,11 @@
 				ED65E2B91C10749F008179B5 /* Bell.xcdatamodeld in Sources */,
 				ED128D2C1C150AB100437DBA /* UserCell.swift in Sources */,
 				ED128D2A1C15025E00437DBA /* FindUsersController.swift in Sources */,
+				ED7B26C71C16D15100D06862 /* UIBarExtension.swift in Sources */,
 				ED51957D1C165F06008C05AB /* Util.swift in Sources */,
 				ED65E2B61C10749F008179B5 /* AppDelegate.swift in Sources */,
 				ED65E2BB1C10749F008179B5 /* ClockController.swift in Sources */,
+				ED7B26C51C16CF7500D06862 /* ColorStyles.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
