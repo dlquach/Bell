@@ -27,6 +27,7 @@ class ClockController: UIViewController {
     var statusLoop = NSTimer()
     var timer = NSTimer()
     var alarmTime:String? = nil
+    var buttonUp = true
     
     var circleView = UIView()
     
@@ -115,6 +116,7 @@ class ClockController: UIViewController {
     
     func stopButtonDown() {
         print("Button down")
+        self.buttonUp = false
         let initialX = self.stopButton.frame.origin.x + self.stopButton.frame.width/2
         let initialY = self.stopButton.frame.origin.y + self.stopButton.frame.height/2
       
@@ -142,11 +144,12 @@ class ClockController: UIViewController {
                 let scale = CGFloat(100);
                 self.circleView.transform = CGAffineTransformMakeScale(scale, scale)
             }, completion: {(finished: Bool) in
+                    if self.buttonUp {
+                        return
+                    }
+                    let defaults = NSUserDefaults.standardUserDefaults()
                     print("Finished animation")
                 
-                
-                    let defaults = NSUserDefaults.standardUserDefaults()
-                    
                     // Ready up to disable your partner's alarm if you have one
                     // If you don't have a partner, just disable your own alarm.
                     if let partnerId = defaults.stringForKey("partnerId") {
@@ -198,8 +201,10 @@ class ClockController: UIViewController {
     
     func stopButtonUp() {
         print("Button up")
+        self.buttonUp = true
+        self.view.layer.removeAllAnimations()
         let defaults = NSUserDefaults.standardUserDefaults()
-        if defaults.boolForKey("alarmIsActive") {
+        if defaults.boolForKey("isAlarmActive") {
             self.changeGlobalColor(ColorStyles.orange, duration: 0.5)
         }
         else {
