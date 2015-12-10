@@ -83,6 +83,7 @@ class ClockController: UIViewController {
         stopButton.addTarget(self, action: "stopButtonDown", forControlEvents: UIControlEvents.TouchDown)
         stopButton.addTarget(self, action: "stopButtonUp", forControlEvents: UIControlEvents.TouchUpInside)
         
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -94,10 +95,13 @@ class ClockController: UIViewController {
         // Set header colors
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.barTintColor = ColorStyles.teal
         self.navigationController?.navigationBar.tintColor = ColorStyles.white
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName :ColorStyles.white]
-        self.headerView.backgroundColor = ColorStyles.teal
+        self.headerView.backgroundColor = ColorStyles.clear
+        
+        
+        changeGlobalColor(ColorStyles.teal, duration: 0)
+        
             
         // Re-enable the status bar
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
@@ -119,19 +123,28 @@ class ClockController: UIViewController {
         self.circleView.backgroundColor = ColorStyles.white
         self.circleView.alpha = 0
         self.circleView.clipsToBounds = true
-        self.view.insertSubview(self.circleView, belowSubview: self.headerView)        
+        self.view.insertSubview(self.circleView, belowSubview: self.headerView)
         
         
         
+        self.view.bringSubviewToFront(self.alarmStatusLabel)
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.circleView.backgroundColor = ColorStyles.teal
             self.circleView.alpha = 1
             })
+        
+        UIView.animateWithDuration(1.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+            self.navigationController?.navigationBar.barTintColor = ColorStyles.teal
+            }, completion: {(finished: Bool) in
+        })
+        
         UIView.animateWithDuration(2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-                let scale = CGFloat(70);
+                let scale = CGFloat(100);
                 self.circleView.transform = CGAffineTransformMakeScale(scale, scale)
             }, completion: {(finished: Bool) in
                     print("Finished animation")
+                
+                
                     let defaults = NSUserDefaults.standardUserDefaults()
                     
                     // Ready up to disable your partner's alarm if you have one
@@ -185,10 +198,17 @@ class ClockController: UIViewController {
     
     func stopButtonUp() {
         print("Button up")
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if defaults.boolForKey("alarmIsActive") {
+            self.changeGlobalColor(ColorStyles.orange, duration: 0.5)
+        }
+        else {
+            self.changeGlobalColor(ColorStyles.teal, duration: 0)
+        }
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.circleView.alpha = 0
+            
         })
-        let defaults = NSUserDefaults.standardUserDefaults()
         if let partnerId = defaults.stringForKey("partnerId") {
             print(partnerId)
             let query = PFQuery(className: "AlarmObject")
@@ -202,6 +222,14 @@ class ClockController: UIViewController {
                 }
             }
         }
+        
+    }
+    func changeGlobalColor(color: UIColor, duration: NSTimeInterval) {
+        UIView.animateWithDuration(duration, animations: { () -> Void in
+            self.view.backgroundColor = color
+            self.stopButton.backgroundColor = color
+            self.navigationController?.navigationBar.barTintColor = color
+        })
     }
     
     func setupTick() {
@@ -327,11 +355,11 @@ class ClockController: UIViewController {
                 let stringTime = ClockController.convertDateToHM(alarmTime as! NSDate)
                 if stringTime == checkTime {
                     if !parseLoop.valid {
+                        changeGlobalColor(ColorStyles.orange, duration: 0.5)
                         waitForStopMessage()
                     }
                 }
             }
-            
         }
         else {
             self.audioPlayer.stop()
