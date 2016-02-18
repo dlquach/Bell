@@ -204,7 +204,7 @@ class ClockController: UIViewController {
         self.buttonUp = true
         self.view.layer.removeAllAnimations()
         let defaults = NSUserDefaults.standardUserDefaults()
-        if defaults.boolForKey("isAlarmActive") {
+        if parseLoop.valid {
             self.changeGlobalColor(ColorStyles.orange, duration: 0.5)
         }
         else {
